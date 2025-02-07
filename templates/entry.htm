@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<link rel="stylesheet" href="{{ urlbase }}static/font/Serif/cmun-serif.css" />
+<link rel="stylesheet" href="{{ urlbase }}static/font/Sans/cmun-sans.css" />
+<script>document.domain = '{{ domain }}';</script>
+<meta name="citation_title" content="{{ title }}"/>
+<meta name="citation_authors" content="({% for author in authors_raw %}{{ author }}{% if not loop.last %}; {% endif %}{% endfor %})"/>
+{% for author in authors_raw %}
+<meta name="citation_author" content="{{ author }}"/>
+{% endfor %}
+<meta name="citation_publication_date" content="{{ date }}"/>
+<meta name="citation_date" content="{{ date }}"/>
+<meta name="citation_year" content="{{ year }}"/>
+<meta name="citation_doi" content="{{ doi }}"/>
+{% if url is not none %}
+<meta name="citation_pdf_url" content="{{ url }}"/>
+{% endif %}
+<meta name="DC.Title" content="{{ title }}"/>
+{% for author in authors_raw %}
+<meta name="DC.Creator" content="{{ author }}"/>
+{% endfor %}
+<meta name="DC.Issued" content="{{ year }}"/>
+<meta property="og:title" content="{{ title }}"/>
+<meta property="og:description" content="A paper by {% for author in authors_raw %}{{ author }}{% if not loop.last %}, {% endif %}{% endfor %}" />
+<meta property="og:url" content="{{ urlbase }}papers/{{ key }}.htm" />
+<meta property="og:type" content="article"/>
+<meta property="article:publisher" content="{{ authors_raw[0] }}"/>
+<meta property="og:image" content="/cites/static/pdf.png"/>
+<title>{{ title }}</title>
+<style type="text/css">
+  body {
+    background-image: url("{{ urlbase }}static/bghigh.png");
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font-family: 'Computer Modern Serif', serif;
+    font-size: 20px;
+    overflow: hidden;
+  }
+
+  .bibtitle { 
+    font-weight:bold; 
+  }
+
+  .bibbooktitle { 
+    font-style:italic; 
+  }
+
+  .rheader {
+    color: #003366;
+    font-size: large;
+    font-weight: bold;
+  }
+
+  .sheader {
+    font-weight: bold;
+    background-color: #003366;
+    color: #ffffff;
+    padding: 2px;
+    margin-bottom: 0px;
+    margin-top: 7px;
+    border-bottom: #ff6633 2px solid;
+  }
+
+  .theader {
+    background-color: #995124;
+    color: #FFFFFF;
+    padding: 1px 2px 1px 2px;
+  }
+
+  .btb-nav-title {
+    background-color: #995124;
+    color: #FFFFFF;
+    padding: 1px 2px 1px 2px;
+  }
+
+  .menu {
+    font-size: x-small;
+    background-color: #EFDDB4;
+    padding: 0px;
+    border: 1px solid #000000;
+    margin: 0px;
+  }
+
+  .menu a {
+    text-decoration: none;
+    color: #1A287D;
+  }
+
+  .menu a:hover {
+    color: #1A287D;
+  }
+
+  dd {
+    display: inline;
+  }
+
+  .bibitem {
+    margin-left:5px;
+  }
+
+  .bibref {
+    padding:7px;
+    padding-left:15px;
+    vertical-align:text-top;
+    display: inline;
+  }
+
+  .result {
+    border: 1px solid #000000;
+    margin:0px;
+    background-color: #ffffff;
+    width:100%;
+  }
+
+  .result a {
+    text-decoration: none;
+    color: #1A287D;
+  }
+
+  .result a:hover {
+    color: #1A287D;
+  }
+
+  .input_box{
+    margin-bottom : 2px;
+  }
+
+  .mini_se {
+    border: none 0;
+    border-top: 1px dashed #717171;
+    height: 1px;
+  }
+
+  .a_name a {
+    color:#1A287D;
+    width:130px;
+  }
+
+  .rsslink {
+    text-decoration: none;
+    color:#F88017;
+  }
+
+  .purebibtex {
+    font-family: monospace;
+    font-size: small;
+    border: 1px solid #DDDDDD;
+    background: none repeat scroll 0 0 #F5F5F5;
+    padding:10px;
+    overflow: auto scroll;
+    width:700px;
+    clear:both;
+  }
+
+  .bibentry-by { 
+    font-style: italic; 
+  }
+
+  .bibentry-abstract {
+    margin:15px;
+  }
+
+  .bibentry-label { 
+    margin-top:15px; 
+  }
+
+  .bibentry-reference { 
+    margin-bottom:15px;
+    padding:10px; 
+    background: none repeat scroll 0 0 #F5F5F5; 
+    border: 1px solid #DDDDDD; 
+  }
+
+  .btb-nav { 
+    text-align: right;
+  }
+
+  a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #1A287D;
+  }
+
+  a:hover {
+    text-decoration: underline;
+    font-weight: bold;
+    color: #1A287D;
+  }
+
+  div.bibentry-document-link-text {
+    display:none;
+  }
+
+  iframe.pdfview {
+    width:100%;
+    height:100vh;
+    overflow:hidden;
+  }
+  
+  div.bibcontentouter {
+    padding:0;
+    margin:0;
+    display:table;
+    height:100%;
+    width:100%;
+    vertical-align:top;
+  }
+  
+  div.bibcontentpost {
+    height:100%;
+    width:100%;
+    display:table-cell;
+    vertical-align:top;
+  }
+
+  @media screen and (max-width: 1600px) {
+    div.bibcontentpost {
+      display:block;
+    }
+  }
+
+  html {
+    height:100%;
+  }
+  
+  body {
+    height:100%;
+    margin:0;
+    padding:0;
+  }
+  
+  div.bibcontentwrapper {
+    border:1px solid #bbb;
+    padding:10px;
+    padding-top:7px;
+    padding-bottom:0px;
+    width:723px;
+    font-family: 'Computer Modern Serif', serif;
+    background: rgba(255, 255, 255, 0.95);
+    vertical-align:top;
+    margin:10px;
+  }
+  
+  div.rheader {
+    font-size:16pt;
+    margin-bottom:3px;
+    color:#331133;
+    font-weight: bold;
+    font-family: 'Computer Modern Sans', sans-serif;
+  }
+  
+  div.rheader img {
+    float:right;
+    height:60px;
+    margin-left:10px;
+  }
+  
+  div.bibentry-label {
+    font-weight:bold;
+  }
+  
+  div.bibentry-reference {
+    margin-top:10px;
+    background: #FFFFFF;
+  }
+  
+  pre.purebibtex {
+    background: #FFFFFF;
+  }
+  
+  div.bibentry-abstract {
+    text-align: justify;
+    text-justify: auto;
+    margin-right:0px;
+  }
+  
+  a span {
+    color: #FFFFFF;
+    background: url("/web_img/hilite.png");
+    background-size: contain;
+    margin: 0;
+    padding: 0;
+    display: inline;
+  }
+
+  @media print {
+    pre.purebibtex {
+      white-space: pre-wrap;
+      white-space: -moz-pre-wrap;
+      white-space: -o-pre-wrap;
+      word-wrap: break-word;
+    }
+    
+    iframe.pdfview {
+      display:none;
+    }
+    
+    div.bibentry-document-link-text {
+      display:block;
+    }
+    
+    div.bibentry-document-link {
+      display:none;
+    }
+
+    span.bibmenu {
+      display:none;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="bibcontentouter">
+  <div class="bibcontentwrapper">
+    <div class="rheader"><img src="{{ urlbase }}static/logo.png"></img>{{ title }}</div>
+    <div>
+      <div class="bibentry-by">{% for author in authors %}<span class="bibauthor"><span itemprop="author" itemtype="https://schema.org/Person">{{ author }}</span></span>{% if not loop.last %}, {% endif %}{% endfor %}</div>
+      <span class="bibmenu">
+        {% if url is not none %}
+        <a target="_blank" href="{{ url }}"><span>[pdf download]</span></a>
+        {% endif %}
+        {% if poster is not none %}
+        <a target="_blank" href="{{ poster }}"><span>[poster]</span></a>
+        {% endif %}
+        {% if doi is not none %}
+        <a target="_blank" href="https://dx.doi.org/{{ doi }}"><span>[doi]</span></a>
+        {% endif %}
+        {% if isbn is not none %}
+        <a target="_blank" href="https://www.isbnsearch.org/isbn/{{ isbn.replace("-", "" ) }}"><span>[isbn]</span></a>
+        {% endif %}
+        {% if video is not none %}
+        <a target="_blank" href="{{ video }}"><span>[video]</span></a>
+        {% endif %}
+        {% if supplementary is not none %}
+        <a target="_blank" href="{{ supplementary }}"><span>[supplementary]</span></a>
+        {% endif %}
+        {% if code is not none %}
+        <a target="_blank" href="{{ code }}"><span>[code/datasets]</span></a>
+        {% endif %}
+        <a href="../"><span>[back to list]</span></a>
+      </span>
+      {% if note is not none %}
+      <br/><span class="note">Note: {{ note }}</span>
+      {% endif %}
+      <div class="bibentry-label">Reference:</div><div class="bibentry-reference">
+        {{ title }} ({% for author in authors %}{{ author }}{% if not loop.last %}, {% endif %}{% endfor %}), {{ how_published }}, {{ date }}
+      </div>
+      <div class="bibentry-label">Bibtex Entry:</div>
+      <pre class="purebibtex">{{ bib_source }}</pre>
+    </div>
+  </div>
+  <div class="bibcontentpost">
+    <iframe frameborder="0" src="/cites/static/pdfjs/web/viewer.html?file={{ url }}" class="pdfview"></iframe>
+  </div>
+</div>
+<script src="/cites/static/mathjax/tex-mml-chtml.js"></script>
+</body>
+</html>
